@@ -114,13 +114,6 @@ export const RecordResults: React.FC = () => {
   const handleSave = async () => {
     if (!selectedClassId || !assessmentTitle) return;
     
-    // Check if at least one score is entered or marked absent
-    const hasData = Object.values(scores).some(s => s.value !== '' || s.isAbsent);
-    if (!hasData) {
-      alert('Please enter at least one score or mark a student absent before saving.');
-      return;
-    }
-
     setIsSaving(true);
     try {
       const payload = {

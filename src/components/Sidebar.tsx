@@ -3,7 +3,12 @@ import { Home, Users, Settings, BookOpen, FileSpreadsheet } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
-export default function Sidebar() {
+interface SidebarProps {
+    isOpen?: boolean;
+    onClose?: () => void;
+}
+
+export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     const location = useLocation();
     const { currentUser, classes } = useAppContext();
 
@@ -20,8 +25,17 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="w-64 bg-slate-900 text-white h-screen flex flex-col">
-            <div className="p-6">
+        <>
+            {/* Mobile Backdrop */}
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 bg-slate-900/50 z-40 md:hidden"
+                    onClick={onClose}
+                />
+            )}
+            
+            <aside className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 z-50 w-64 bg-slate-900 text-white h-screen flex flex-col transition-transform duration-300 ease-in-out shrink-0`}>
+                <div className="p-6">
                 <h1 className="text-xl font-bold tracking-wider">153 World Christian School</h1>
                 <p className="text-slate-400 text-sm mt-1">Student Grade Management System</p>
             </div>
@@ -36,6 +50,7 @@ export default function Sidebar() {
                             <Link
                                 key={item.name}
                                 to={item.path}
+                                onClick={onClose}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
                                     ? 'bg-blue-600 text-white'
                                     : 'text-slate-300 hover:bg-slate-800'
@@ -60,6 +75,7 @@ export default function Sidebar() {
                             <Link
                                 key={cls.id}
                                 to={`/class/${cls.id}`}
+                                onClick={onClose}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
                                     ? 'bg-blue-600 text-white'
                                     : 'text-slate-300 hover:bg-slate-800'
@@ -80,6 +96,7 @@ export default function Sidebar() {
                                 <Link
                                     key={item.name}
                                     to={item.path}
+                                    onClick={onClose}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
                                         ? 'bg-blue-600 text-white'
                                         : 'text-slate-300 hover:bg-slate-800'
@@ -106,5 +123,6 @@ export default function Sidebar() {
                 </div>
             </div>
         </aside>
+        </>
     );
 }

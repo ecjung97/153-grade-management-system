@@ -101,7 +101,7 @@ export default function AssessmentsList() {
                 </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-x-auto">
                 <table className="w-full text-left text-sm whitespace-nowrap">
                     <thead className="bg-slate-50 border-b border-slate-200 text-slate-600">
                         <tr>

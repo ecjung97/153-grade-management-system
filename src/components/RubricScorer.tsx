@@ -61,7 +61,7 @@ export const RubricScorer: React.FC<RubricScorerProps> = ({ isOpen, onClose, stu
         </div>
 
         {/* Content */}
-        <div className="overflow-y-auto p-5 bg-slate-50 flex-1">
+        <div className="overflow-auto p-2 sm:p-5 bg-slate-50 flex-1">
           <div className="border border-slate-200 rounded-lg overflow-hidden bg-white shadow-sm min-w-[600px]">
             <table className="w-full text-left text-sm table-fixed">
               <thead className="bg-slate-100 border-b border-slate-200 text-slate-700">

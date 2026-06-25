@@ -15,8 +15,8 @@ export function Dashboard() {
   return (
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-lg">
-        <h1 className="text-3xl font-bold mb-2">Welcome back, {currentUser?.name} - {currentUser?.englishName}!</h1>
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 md:p-8 text-white shadow-lg">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Welcome back, {currentUser?.name} - {currentUser?.englishName}!</h1>
         <p className="text-blue-100">Here's an overview of your classes and recent activities.</p>
       </div>
 
