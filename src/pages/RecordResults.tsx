@@ -6,7 +6,8 @@ import { useAppContext } from '../context/AppContext';
 import { ClassSelector } from '../components/ClassSelector';
 import { GradingTable } from '../components/GradingTable';
 import { AssessmentTypeSettings } from '../components/AssessmentTypeSettings';
-import { Save, FileText, Calendar, Hash, Award, Users, Settings } from 'lucide-react';
+import { RubricBuilder } from '../components/RubricBuilder';
+import { Save, FileText, Calendar, Hash, Award, Users, Settings, Edit3 } from 'lucide-react';
 import { getKoreanMonthWeek } from '../utils/dateUtils';
 import { saveAssessmentResults, updateAssessmentResults } from '../services/db';
 import './RecordResults.css';
@@ -33,6 +34,7 @@ export const RecordResults: React.FC = () => {
   const [rubric, setRubric] = useState<RubricCriteria[]>(EXCEL_PRACTICAL_RUBRIC);
   const [isSaving, setIsSaving] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isRubricBuilderOpen, setIsRubricBuilderOpen] = useState(false);
   
   // scores map: studentId -> { value, notes, isAbsent, rubricScores }
   const [scores, setScores] = useState<Record<string, { value: number | ''; rubricScores?: Record<string, number>; notes: string; isAbsent?: boolean }>>({});
@@ -290,8 +292,19 @@ export const RecordResults: React.FC = () => {
             
             {gradingMode === 'Rubric' && (
               <div className="form-group p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                <h4 className="font-semibold text-blue-900 mb-1">Rubric Grading Active</h4>
-                <p className="text-sm text-blue-700 mb-3">Scores will be calculated automatically based on the selected rubric levels.</p>
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h4 className="font-semibold text-blue-900 mb-1">Rubric Grading Active</h4>
+                    <p className="text-sm text-blue-700">Scores will be calculated automatically based on the selected rubric levels.</p>
+                  </div>
+                  <button 
+                    onClick={() => setIsRubricBuilderOpen(true)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-md text-sm font-medium transition-colors border border-blue-200"
+                  >
+                    <Edit3 size={14} />
+                    Edit Rubric
+                  </button>
+                </div>
                 <div className="flex justify-between items-center bg-white px-3 py-2 rounded shadow-sm">
                   <span className="text-sm font-medium text-slate-600">Total Max Score</span>
                   <span className="font-bold text-blue-600">{calculatedMaxScore} pts</span>
@@ -331,6 +344,14 @@ export const RecordResults: React.FC = () => {
       <AssessmentTypeSettings 
         isOpen={isSettingsOpen} 
         onClose={() => setIsSettingsOpen(false)} 
+      />
+
+      {/* Render the Rubric Builder Modal */}
+      <RubricBuilder 
+        isOpen={isRubricBuilderOpen}
+        onClose={() => setIsRubricBuilderOpen(false)}
+        initialRubric={rubric}
+        onSave={(newRubric) => setRubric(newRubric)}
       />
     </div>
   );
