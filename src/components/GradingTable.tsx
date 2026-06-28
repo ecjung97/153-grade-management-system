@@ -10,7 +10,7 @@ interface GradingTableProps {
   onNotesChange: (studentId: string, notes: string) => void;
   onAbsentChange: (studentId: string, isAbsent: boolean) => void;
   maxScore: number;
-  gradingMode?: 'Standard' | 'Rubric';
+  gradingMode?: 'Standard' | 'Rubric' | 'Homework';
   rubric?: RubricCriteria[];
   onRubricScoreChange?: (studentId: string, rubricScores: Record<string, number>, totalValue: number) => void;
 }
@@ -38,7 +38,7 @@ export const GradingTable: React.FC<GradingTableProps> = ({
           <tr>
             <th>Student Name</th>
             <th className="w-20 text-center">Absent</th>
-            <th className="score-col">Score (out of {maxScore})</th>
+            <th className="score-col">{gradingMode === 'Homework' ? 'Status' : `Score (out of ${maxScore})`}</th>
             <th>Notes (Optional)</th>
           </tr>
         </thead>
@@ -60,7 +60,31 @@ export const GradingTable: React.FC<GradingTableProps> = ({
                   />
                 </td>
                 <td className="score-cell">
-                  {gradingMode === 'Rubric' ? (
+                  {gradingMode === 'Homework' ? (
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => onScoreChange(student.id, 2)}
+                        disabled={studentScore.isAbsent}
+                        className={`px-2 py-1 text-xs font-medium rounded transition-colors ${studentScore.value === 2 ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100'} disabled:opacity-50`}
+                      >
+                        🟢 Done
+                      </button>
+                      <button
+                        onClick={() => onScoreChange(student.id, 1)}
+                        disabled={studentScore.isAbsent}
+                        className={`px-2 py-1 text-xs font-medium rounded transition-colors ${studentScore.value === 1 ? 'bg-yellow-100 text-yellow-700 border border-yellow-200' : 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100'} disabled:opacity-50`}
+                      >
+                        🟡 Partial
+                      </button>
+                      <button
+                        onClick={() => onScoreChange(student.id, 0)}
+                        disabled={studentScore.isAbsent}
+                        className={`px-2 py-1 text-xs font-medium rounded transition-colors ${studentScore.value === 0 ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100'} disabled:opacity-50`}
+                      >
+                        🔴 Not Done
+                      </button>
+                    </div>
+                  ) : gradingMode === 'Rubric' ? (
                     <button 
                       onClick={() => !studentScore.isAbsent && setActiveRubricStudentId(student.id)}
                       disabled={studentScore.isAbsent}

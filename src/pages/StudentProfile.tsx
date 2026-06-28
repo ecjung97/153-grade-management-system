@@ -114,9 +114,19 @@ export default function StudentProfile() {
                           </span>
                         ) : (
                           <div>
-                            <span className="font-bold text-slate-900 whitespace-nowrap">
-                              {score.value} <span className="text-slate-400 text-sm font-normal">/ {(score as any).maxScore}</span>
-                            </span>
+                            {score.gradingMode === 'Homework' ? (
+                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
+                                score.value === 2 ? 'bg-green-50 text-green-700 border-green-200' :
+                                score.value === 1 ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                'bg-red-50 text-red-700 border-red-200'
+                              }`}>
+                                {score.value === 2 ? '🟢 Done' : score.value === 1 ? '🟡 Partial' : '🔴 Not Done'}
+                              </span>
+                            ) : (
+                              <span className="font-bold text-slate-900 whitespace-nowrap">
+                                {score.value} <span className="text-slate-400 text-sm font-normal">/ {(score as any).maxScore}</span>
+                              </span>
+                            )}
                             {score.gradingMode === 'Rubric' && score.rubricScores && score.rubric && (
                               <div className="mt-2 space-y-1 min-w-[150px]">
                                 {score.rubric.map((crit: any) => (

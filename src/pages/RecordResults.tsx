@@ -30,7 +30,7 @@ export const RecordResults: React.FC = () => {
   
   const [assessmentDate, setAssessmentDate] = useState(new Date().toISOString().split('T')[0]);
   const [maxScore, setMaxScore] = useState<number | "">(100);
-  const [gradingMode, setGradingMode] = useState<'Standard' | 'Rubric'>('Standard');
+  const [gradingMode, setGradingMode] = useState<'Standard' | 'Rubric' | 'Homework'>('Standard');
   const [rubric, setRubric] = useState<RubricCriteria[]>(EXCEL_PRACTICAL_RUBRIC);
   const [isSaving, setIsSaving] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -40,6 +40,7 @@ export const RecordResults: React.FC = () => {
   const [scores, setScores] = useState<Record<string, { value: number | ''; rubricScores?: Record<string, number>; notes: string; isAbsent?: boolean }>>({});
 
   const calculatedMaxScore = useMemo(() => {
+    if (gradingMode === 'Homework') return 2;
     if (gradingMode === 'Standard') return maxScore === "" ? 0 : maxScore;
     return rubric.reduce((sum, crit) => {
       const maxLevel = Math.max(...crit.levels.map(l => l.score));
@@ -262,6 +263,12 @@ export const RecordResults: React.FC = () => {
                   onClick={() => setGradingMode('Rubric')}
                 >
                   Rubric (실기평가)
+                </button>
+                <button
+                  className={`flex-1 py-1.5 px-3 text-sm font-medium rounded-md transition-colors ${gradingMode === 'Homework' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-600 hover:text-slate-900'}`}
+                  onClick={() => setGradingMode('Homework')}
+                >
+                  Homework (숙제)
                 </button>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { deleteAssessment } from '../services/db';
-import { Edit2, Trash2, Calendar, BookOpen, Award, Search, Filter } from 'lucide-react';
+import { Edit2, Trash2, Calendar, BookOpen, Award, Search, Filter, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function AssessmentsList() {
@@ -129,7 +129,12 @@ export default function AssessmentsList() {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="font-medium text-slate-900">{assessment.title}</div>
+                                        <button 
+                                            onClick={() => navigate(`/assessments/${assessment.id}`)}
+                                            className="font-medium text-blue-600 hover:text-blue-800 hover:underline text-left text-base"
+                                        >
+                                            {assessment.title}
+                                        </button>
                                         <div className="text-xs text-slate-500">Max Score: {assessment.maxScore}</div>
                                     </td>
                                     <td className="px-6 py-4">
@@ -146,6 +151,13 @@ export default function AssessmentsList() {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex justify-end gap-2 text-slate-400">
+                                            <button 
+                                                onClick={() => navigate(`/assessments/${assessment.id}`)}
+                                                className="p-1.5 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-colors" 
+                                                title="View Details"
+                                            >
+                                                <Eye size={16} />
+                                            </button>
                                             <button 
                                                 onClick={() => navigate(`/record-results?edit=${assessment.id}`)}
                                                 className="p-1.5 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" 

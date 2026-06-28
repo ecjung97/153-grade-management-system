@@ -5,6 +5,7 @@ import ClassRoster from './pages/ClassRoster';
 import { RecordResults } from './pages/RecordResults';
 import { Dashboard } from './pages/Dashboard';
 import AssessmentsList from './pages/AssessmentsList';
+import AssessmentDetails from './pages/AssessmentDetails';
 import AllStudents from './pages/AllStudents';
 import StudentProfile from './pages/StudentProfile';
 import Migration from './pages/Migration';
@@ -41,6 +42,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/assessments" element={<AssessmentsList />} />
+          <Route path="/assessments/:assessmentId" element={<AssessmentDetails />} />
           <Route path="/students" element={<AllStudents />} />
           <Route path="/student/:studentId" element={<StudentProfile />} />
           <Route path="/record-results" element={<RecordResults />} />

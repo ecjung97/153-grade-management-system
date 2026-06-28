@@ -34,7 +34,7 @@ export interface Assessment {
     type: AssessmentType;
     date: string;
     maxScore: number;
-    gradingMode?: 'Standard' | 'Rubric';
+    gradingMode?: 'Standard' | 'Rubric' | 'Homework';
     rubric?: RubricCriteria[];
     results: Record<string, { 
         value: number | ''; 
